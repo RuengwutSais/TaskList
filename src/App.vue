@@ -24,10 +24,20 @@ const addTodo = () => {
     done: false,
     createdAt: new Date().getTime(),
   });
+  input_content.value="";
+  input_category.value="";
 };
 
 const removeTodo = (todoToRemove) => {
   todo.value = todo.value.filter((e) => e.id !== todoToRemove.id);
+};
+
+const checkPersonalCategory = () => {
+  input_category.value = "Personal";
+};
+
+const checkWorkCategory = () => {
+  input_category.value = "Work";
 };
 
 watch(
@@ -77,35 +87,37 @@ onMounted(() => {
           <p class="mt-4 text-start">What's your task list category?</p>
           <div class="d-flex gap-4 mt-4" style="height: 4rem">
             <div
-              class="container d-flex flex-row rounded border bg-white shadow-sm p-2 align-items-center justify-content-center"
-            >
-              <div class="form-check">
+              class="container d-flex flex-row rounded border bg-white shadow-sm p-2 align-items-center justify-content-center cursor-pointer"
+              @click="checkPersonalCategory"
+              >
+              <div class="form-check cursor-pointer">
                 <input
-                  class="form-check-input"
+                  class="form-check-input cursor-pointer"
                   type="radio"
-                  name="category"
+                  name="category1"
                   id="category_personal"
                   value="Personal"
                   v-model="input_category"
                 />
-                <label class="form-check-label" for="flexRadioDefault1">
+                <label class="form-check-label cursor-pointer" for="flexRadioDefault1">
                   Personal
                 </label>
               </div>
             </div>
             <div
-              class="container d-flex rounded border bg-white shadow-sm p-2 align-items-center justify-content-center"
-            >
-              <div class="form-check">
+              class="container d-flex rounded border bg-white shadow-sm p-2 align-items-center justify-content-center cursor-pointer"
+              @click="checkWorkCategory"
+              >
+              <div class="form-check cursor-pointer">
                 <input
-                  class="form-check-input"
+                  class="form-check-input cursor-pointer"
                   type="radio"
-                  name="category"
+                  name="categor2"
                   id="category_work"
                   value="Work"
                   v-model="input_category"
                 />
-                <label class="form-check-label" for="flexRadioDefault1">
+                <label class="form-check-label cursor-pointer" for="flexRadioDefault1">
                   Work
                 </label>
               </div>
@@ -123,7 +135,7 @@ onMounted(() => {
       </section>
     </div>
     <section>
-      <p class="text-start mt-4">Todo List</p>
+      <p class="text-start mt-4 fw-bold">Todo List</p>
       <div
         v-for="todo in todoASC"
         :key="todo.id"
@@ -137,7 +149,7 @@ onMounted(() => {
 
           <span>
             <input
-              class="form-control border-0 bg-white"
+              class="form-control border-0 bg-white truncate-input"
               type="text"
               v-model="todo.content"
             />
